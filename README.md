@@ -5,13 +5,13 @@ Small TypeScript utilities for everyday application code.
 ## Install
 
 ```sh
-npm install lodot
+npm install @terrytsai/lodot
 ```
 
 ## Usage
 
 ```ts
-import { groupBy, uniqueBy } from "lodot";
+import { groupBy, uniqueBy } from "@terrytsai/lodot";
 
 const people = [
   { name: "Ada", team: "platform" },

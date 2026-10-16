@@ -1,5 +1,5 @@
 {
-  "name": "lodot",
+  "name": "@terrytsai/lodot",
   "version": "0.1.0",
   "description": "Small TypeScript utilities for everyday application code.",
   "type": "module",
