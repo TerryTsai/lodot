@@ -1,7 +1,7 @@
 {
   "name": "@terrytsai/lodot",
   "version": "0.1.0",
-  "description": "Small TypeScript utilities for everyday application code.",
+  "description": "Utilities for simplifying and standardizing evals across projects.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -10,6 +10,21 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
+    },
+    "./codex-judge": {
+      "types": "./dist/codex-judge.d.ts",
+      "import": "./dist/codex-judge.js",
+      "default": "./dist/codex-judge.js"
+    },
+    "./codex-microsandbox": {
+      "types": "./dist/codex-microsandbox.d.ts",
+      "import": "./dist/codex-microsandbox.js",
+      "default": "./dist/codex-microsandbox.js"
+    },
+    "./run-in-microsandbox": {
+      "types": "./dist/run-in-microsandbox.d.ts",
+      "import": "./dist/run-in-microsandbox.js",
+      "default": "./dist/run-in-microsandbox.js"
     }
   },
   "files": [
@@ -33,20 +48,47 @@
   "keywords": [
     "typescript",
     "utilities",
-    "esm"
+    "evals",
+    "microsandbox",
+    "sandbox",
+    "testing"
   ],
   "author": "Terry Tsai",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
-    "typescript": "^7.0.2"
+    "@openai/codex-sdk": "^0.163.0",
+    "@sentry/node": "^10.76.2",
+    "@types/node": "^22.20.5",
+    "deepeval": "^0.9.22",
+    "typescript": "^7.0.2",
+    "zod": "^4.3.6"
   },
   "directories": {
     "test": "tests"
+  },
+  "dependencies": {
+    "microsandbox": "^0.7.8"
+  },
+  "peerDependencies": {
+    "@openai/codex-sdk": "^0.163.0",
+    "deepeval": "^0.9.22",
+    "zod": "^4.3.6"
+  },
+  "peerDependenciesMeta": {
+    "@openai/codex-sdk": {
+      "optional": true
+    },
+    "deepeval": {
+      "optional": true
+    },
+    "zod": {
+      "optional": true
+    }
   }
 }
