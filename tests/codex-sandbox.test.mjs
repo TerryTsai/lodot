@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { codexSandbox } from "../dist/codex-sandbox.js";
+import { codexSandbox } from "../dist/index.js";
 
 test("creates prompt-only native runner configuration", async (t) => {
   const codexHome = await temporaryCodexHome(t);

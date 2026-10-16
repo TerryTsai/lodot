@@ -10,21 +10,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./codex-judge": {
-      "types": "./dist/codex-judge.d.ts",
-      "import": "./dist/codex-judge.js",
-      "default": "./dist/codex-judge.js"
-    },
-    "./codex-sandbox": {
-      "types": "./dist/codex-sandbox.d.ts",
-      "import": "./dist/codex-sandbox.js",
-      "default": "./dist/codex-sandbox.js"
-    },
-    "./sandbox": {
-      "types": "./dist/sandbox.d.ts",
-      "import": "./dist/sandbox.js",
-      "default": "./dist/sandbox.js"
     }
   },
   "files": [
@@ -67,6 +52,7 @@
     "@types/node": "^22.20.5",
     "deepeval": "^0.9.22",
     "typescript": "^7.0.2",
+    "yaml": "^2.9.1",
     "zod": "^4.3.6"
   },
   "directories": {
@@ -78,16 +64,11 @@
   "peerDependencies": {
     "@openai/codex-sdk": "^0.163.0",
     "deepeval": "^0.9.22",
+    "yaml": "^2.9.1",
     "zod": "^4.3.6"
   },
   "peerDependenciesMeta": {
-    "@openai/codex-sdk": {
-      "optional": true
-    },
-    "deepeval": {
-      "optional": true
-    },
-    "zod": {
+    "yaml": {
       "optional": true
     }
   }

@@ -8,9 +8,11 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { CodexJudge } from "../dist/codex-judge.js";
-import { codexSandbox } from "../dist/codex-sandbox.js";
-import { runSandbox } from "../dist/sandbox.js";
+import {
+  CodexJudge,
+  codexSandbox,
+  runSandbox,
+} from "../dist/index.js";
 
 const live = process.env.LODOT_LIVE_CODEX_TESTS === "1";
 

@@ -38,7 +38,7 @@ export interface SandboxCopy {
   readonly target: string;
 }
 
-/** Options for one isolated sandbox process. */
+/** Options for one isolated sandbox process run. */
 export interface SandboxOptions {
   /** OCI image reference used to create the sandbox. */
   readonly image: string;

@@ -17,7 +17,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { runSandboxWith } from "../dist/sandbox.js";
+import { runSandboxWith } from "../dist/run-sandbox.js";
 
 test("runs once and returns disposable side effects", async (t) => {
   const host = await mkdtemp(path.join(tmpdir(), "lodot-run-input-"));

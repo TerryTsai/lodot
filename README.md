@@ -9,12 +9,58 @@ across projects.
 npm install @terrytsai/lodot
 ```
 
-`CodexJudge` has optional peer dependencies so projects that only use the
-Microsandbox utilities do not install DeepEval and the Codex SDK:
+All public utilities are imported from the package root; Lodot currently has
+no public subpath entrypoints.
+
+The root export includes `CodexJudge`, so its Codex SDK, DeepEval, and Zod
+peers are required and installed by modern package managers. To install them
+explicitly or align versions with an existing evaluation project:
 
 ```sh
 npm install @openai/codex-sdk@^0.163.0 deepeval@^0.9.22 zod@^4.3.6
 ```
+
+Install the optional YAML peer to use `loadGoldens`:
+
+```sh
+npm install yaml@^2.9.1
+```
+
+## YAML goldens
+
+`loadGoldens` loads a flat directory of readable YAML files into native
+DeepEval `Golden` instances:
+
+```yaml
+# evals/goldens/quoted-search.yaml
+input: |-
+  Write release notes from these verified facts:
+
+  - Search now supports quoted phrases.
+  - CSV export is not included in this release.
+
+expectations:
+  must:
+    - State that quoted-phrase search is now available.
+  mustNot:
+    - Claim CSV export is available.
+```
+
+```ts
+import { EvaluationDataset } from "deepeval";
+import { loadGoldens } from "@terrytsai/lodot";
+
+const dataset = new EvaluationDataset({
+  goldens: await loadGoldens(
+    new URL("./evals/goldens/", import.meta.url),
+  ),
+});
+```
+
+Only `.yaml` files directly inside the supplied directory are loaded. Files
+are sorted by filename, and the filename without its extension supplies the
+golden's `name` when the YAML does not. YAML fields otherwise pass directly to
+DeepEval's existing `Golden` constructor.
 
 ## CodexJudge
 
@@ -23,7 +69,7 @@ starts a fresh thread. Model settings are the Codex SDK's native
 `ThreadOptions`; lower-level settings are native `CodexOptions`.
 
 ```ts
-import { CodexJudge } from "@terrytsai/lodot/codex-judge";
+import { CodexJudge } from "@terrytsai/lodot";
 import { z } from "zod";
 
 const judge = new CodexJudge({

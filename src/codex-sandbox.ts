@@ -5,7 +5,7 @@ import path from "node:path";
 import type {
   SandboxOptions,
   SandboxCopy,
-} from "./sandbox.js";
+} from "./run-sandbox.js";
 
 const CODEX_CLI_PACKAGE = "@openai/codex@0.163.0";
 const GUEST_CODEX_HOME = "/root/.codex";

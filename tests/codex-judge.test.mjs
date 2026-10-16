@@ -14,7 +14,7 @@ import { GEval } from "deepeval/metrics";
 import { SingleTurnParams } from "deepeval/test-case";
 import { z } from "zod";
 
-import { CodexJudge } from "../dist/codex-judge.js";
+import { CodexJudge } from "../dist/index.js";
 
 test("generates text in fresh threads and forwards native Codex options", async (t) => {
   const fake = await fakeCodex(t);
