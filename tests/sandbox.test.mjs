@@ -17,7 +17,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { runInMicrosandboxWith } from "../dist/run-in-microsandbox.js";
+import { runSandboxWith } from "../dist/sandbox.js";
 
 test("runs once and returns disposable side effects", async (t) => {
   const host = await mkdtemp(path.join(tmpdir(), "lodot-run-input-"));
@@ -50,7 +50,7 @@ test("runs once and returns disposable side effects", async (t) => {
     };
   });
 
-  const result = await runInMicrosandboxWith(
+  const result = await runSandboxWith(
     {
       image: "example.test/runner:latest",
       command: ["/bin/tool", "--flag"],
@@ -109,7 +109,7 @@ test("uses the image command and can leave no workspace", async () => {
     return { events: [{ kind: "exited", code: 0 }] };
   });
 
-  const result = await runInMicrosandboxWith(
+  const result = await runSandboxWith(
     {
       image: "example.test/default:latest",
       network: "public",
@@ -128,7 +128,7 @@ test("a timeout kills the process and destroys the sandbox", async () => {
   const fake = fakeSdk(async () => ({ events: [], block: true }));
 
   await assert.rejects(
-    runInMicrosandboxWith(
+    runSandboxWith(
       {
         image: "example.test/slow:latest",
         command: ["/bin/wait"],

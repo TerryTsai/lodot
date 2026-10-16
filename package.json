@@ -16,15 +16,15 @@
       "import": "./dist/codex-judge.js",
       "default": "./dist/codex-judge.js"
     },
-    "./codex-microsandbox": {
-      "types": "./dist/codex-microsandbox.d.ts",
-      "import": "./dist/codex-microsandbox.js",
-      "default": "./dist/codex-microsandbox.js"
+    "./codex-sandbox": {
+      "types": "./dist/codex-sandbox.d.ts",
+      "import": "./dist/codex-sandbox.js",
+      "default": "./dist/codex-sandbox.js"
     },
-    "./run-in-microsandbox": {
-      "types": "./dist/run-in-microsandbox.d.ts",
-      "import": "./dist/run-in-microsandbox.js",
-      "default": "./dist/run-in-microsandbox.js"
+    "./sandbox": {
+      "types": "./dist/sandbox.d.ts",
+      "import": "./dist/sandbox.js",
+      "default": "./dist/sandbox.js"
     }
   },
   "files": [
@@ -32,7 +32,7 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.json",
     "test": "npm run build && node --test",
     "prepack": "npm run build",
     "prepublishOnly": "npm test"

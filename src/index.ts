@@ -1,8 +1,8 @@
-export { createCodexMicrosandboxConfig } from "./codex-microsandbox.js";
-export { runInMicrosandbox } from "./run-in-microsandbox.js";
+export { codexSandbox } from "./codex-sandbox.js";
+export { runSandbox } from "./sandbox.js";
 export type {
-  RunInMicrosandboxOptions,
-  RunInMicrosandboxResult,
   SandboxCommand,
   SandboxCopy,
-} from "./run-in-microsandbox.js";
+  SandboxOptions,
+  SandboxResult,
+} from "./sandbox.js";

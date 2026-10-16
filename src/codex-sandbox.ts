@@ -3,30 +3,28 @@ import { homedir } from "node:os";
 import path from "node:path";
 
 import type {
-  RunInMicrosandboxOptions,
+  SandboxOptions,
   SandboxCopy,
-} from "./run-in-microsandbox.js";
+} from "./sandbox.js";
 
 const CODEX_CLI_PACKAGE = "@openai/codex@0.163.0";
 const GUEST_CODEX_HOME = "/root/.codex";
 
 /**
- * Creates native runInMicrosandbox options for one noninteractive Codex run.
+ * Creates native sandbox options for one noninteractive Codex run.
  *
  * The caller's current workspace and file-backed Codex login are copied into
  * the ephemeral VM. Any supplied options override these defaults directly.
  */
-export function createCodexMicrosandboxConfig(
+export function codexSandbox(
   prompt: string,
-  overrides: Partial<RunInMicrosandboxOptions> = {},
-): RunInMicrosandboxOptions {
+  overrides: Partial<SandboxOptions> = {},
+): SandboxOptions {
   if (typeof prompt !== "string" || prompt.trim().length === 0) {
-    throw new TypeError(
-      "createCodexMicrosandboxConfig() requires a nonempty prompt",
-    );
+    throw new TypeError("codexSandbox() requires a nonempty prompt");
   }
 
-  const defaults: RunInMicrosandboxOptions = {
+  const defaults: SandboxOptions = {
     // The slim Node image omits the OS CA bundle used by the Rust Codex binary.
     image: "node:22-bookworm",
     command: [

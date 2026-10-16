@@ -38,8 +38,8 @@ export interface SandboxCopy {
   readonly target: string;
 }
 
-/** Options for one isolated Microsandbox process. */
-export interface RunInMicrosandboxOptions {
+/** Options for one isolated sandbox process. */
+export interface SandboxOptions {
   /** OCI image reference used to create the sandbox. */
   readonly image: string;
 
@@ -81,7 +81,7 @@ export interface RunInMicrosandboxOptions {
 }
 
 /** Files and status produced by one completed sandbox run. */
-export interface RunInMicrosandboxResult extends AsyncDisposable {
+export interface SandboxResult extends AsyncDisposable {
   /** Process exit code. Nonzero exits are returned, not thrown. */
   readonly exitCode: number;
 
@@ -155,17 +155,17 @@ interface RunControl {
  * the working copy. The final guest workspace is exported to a separate temp
  * path. Call `dispose()` (or use `await using`) when assertions are complete.
  */
-export function runInMicrosandbox(
-  options: RunInMicrosandboxOptions,
-): Promise<RunInMicrosandboxResult> {
-  return runInMicrosandboxWith(options, () => import("microsandbox"));
+export function runSandbox(
+  options: SandboxOptions,
+): Promise<SandboxResult> {
+  return runSandboxWith(options, () => import("microsandbox"));
 }
 
 /** @internal Dependency-injected entry point used by the test suite. */
-export async function runInMicrosandboxWith(
-  options: RunInMicrosandboxOptions,
+export async function runSandboxWith(
+  options: SandboxOptions,
   loadSdk: LoadSdk,
-): Promise<RunInMicrosandboxResult> {
+): Promise<SandboxResult> {
   const run = await prepareRun(options);
   const control = createRunControl(run.timeoutMs, options.signal);
   let sandbox: Sandbox | undefined;
@@ -227,7 +227,7 @@ export async function runInMicrosandboxWith(
   }
 }
 
-class SandboxRunResult implements RunInMicrosandboxResult {
+class SandboxRunResult implements SandboxResult {
   readonly exitCode: number;
   readonly success: boolean;
   readonly stdoutPath: string;
@@ -268,10 +268,10 @@ class SandboxRunResult implements RunInMicrosandboxResult {
 }
 
 async function prepareRun(
-  options: RunInMicrosandboxOptions,
+  options: SandboxOptions,
 ): Promise<PreparedRun> {
   if (!isRecord(options)) {
-    throw new TypeError("runInMicrosandbox() requires an options object");
+    throw new TypeError("runSandbox() requires an options object");
   }
 
   const image = nonemptyString(options.image, "image");
@@ -758,7 +758,7 @@ function prepareStdin(
 }
 
 function prepareMemory(
-  memory: RunInMicrosandboxOptions["memory"],
+  memory: SandboxOptions["memory"],
 ): number | undefined {
   if (memory === undefined) return undefined;
   if (typeof memory === "number") {
@@ -776,7 +776,7 @@ function prepareMemory(
 }
 
 function prepareNetwork(
-  network: RunInMicrosandboxOptions["network"],
+  network: SandboxOptions["network"],
 ): "none" | "public" {
   if (network === undefined) return "none";
   if (network !== "none" && network !== "public") {

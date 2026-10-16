@@ -9,7 +9,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { createCodexMicrosandboxConfig } from "../dist/codex-microsandbox.js";
+import { codexSandbox } from "../dist/codex-sandbox.js";
 
 test("creates prompt-only native runner configuration", async (t) => {
   const codexHome = await temporaryCodexHome(t);
@@ -17,7 +17,7 @@ test("creates prompt-only native runner configuration", async (t) => {
   process.env.CODEX_HOME = codexHome;
   t.after(() => restoreEnvironment("CODEX_HOME", previousCodexHome));
 
-  const config = createCodexMicrosandboxConfig("Inspect the fixture");
+  const config = codexSandbox("Inspect the fixture");
 
   assert.equal(config.image, "node:22-bookworm");
   assert.equal(config.workspace, process.cwd());
@@ -75,7 +75,7 @@ test("uses existing runner attributes for overrides", async (t) => {
   t.after(() => restoreEnvironment("CODEX_HOME", previousCodexHome));
 
   const command = ["codex", "exec", "custom"];
-  const config = createCodexMicrosandboxConfig("overridden", {
+  const config = codexSandbox("overridden", {
     image: "example.test/codex:current",
     command,
     workspace,
@@ -103,7 +103,7 @@ test("uses existing runner attributes for overrides", async (t) => {
 
 test("rejects an empty prompt", () => {
   assert.throws(
-    () => createCodexMicrosandboxConfig("  "),
+    () => codexSandbox("  "),
     /requires a nonempty prompt/,
   );
 });

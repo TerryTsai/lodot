@@ -86,18 +86,18 @@ resolve the legacy file and fail with `inComponentScope is not a function`.
 This is an upstream 0.9.22 packaging issue that also affects DeepEval's own
 models, not a `CodexJudge` contract mismatch.
 
-## Codex in Microsandbox
+## Codex sandbox
 
 Pass the factory result directly to the existing runner:
 
 ```ts
 import {
-  createCodexMicrosandboxConfig,
-  runInMicrosandbox,
+  codexSandbox,
+  runSandbox,
 } from "@terrytsai/lodot";
 
-await using run = await runInMicrosandbox(
-  createCodexMicrosandboxConfig("Review this workspace and summarize risks."),
+await using run = await runSandbox(
+  codexSandbox("Review this workspace and summarize risks."),
 );
 ```
 
@@ -109,11 +109,11 @@ the Codex binary. The VM needs public networking for Codex inference and for
 the pinned CLI package that `npx` installs. For repeated runs, override the
 native `image` and `command` attributes with a prebuilt image containing Codex.
 
-All overrides use `RunInMicrosandboxOptions`; there is no second configuration
+All overrides use `SandboxOptions`; there is no second configuration
 schema:
 
 ```ts
-const config = createCodexMicrosandboxConfig("Evaluate the fixture.", {
+const config = codexSandbox("Evaluate the fixture.", {
   workspace: "./fixtures/case-1",
   cpus: 4,
   memory: "2G",
@@ -131,11 +131,11 @@ refresh the host login or use a managed Codex access-token workflow.
 Set `LODOT_LIVE_CODEX_TESTS=1` when running `npm test` to include the real
 subscription-backed judge and Microsandbox smoke tests.
 
-## Generic Microsandbox runner
+## Sandbox runner
 
-The lower-level `runInMicrosandbox` utility runs one command in a fresh
-sandbox and returns paths you can assert against. It requires Node.js 22 or
-newer.
+The lower-level `runSandbox` utility uses Microsandbox to run one command in a
+fresh sandbox and returns paths you can assert against. It requires Node.js 22
+or newer.
 
 ```ts
 import assert from "node:assert/strict";
@@ -143,9 +143,9 @@ import { readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import path from "node:path";
 
-import { runInMicrosandbox } from "@terrytsai/lodot";
+import { runSandbox } from "@terrytsai/lodot";
 
-await using run = await runInMicrosandbox({
+await using run = await runSandbox({
   image: "node:22-slim",
   command: ["npm", "test"],
   workspace: process.cwd(),
